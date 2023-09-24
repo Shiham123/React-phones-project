@@ -22,7 +22,7 @@ const createdRouter = createBrowserRouter([
       {
         path: '/phones/:id',
         element: <PhoneDetails />,
-        loader: () => fetch('/public/phones.json'),
+        loader: () => fetch('/phones.json'),
       },
     ],
   },

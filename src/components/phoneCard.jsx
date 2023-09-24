@@ -7,7 +7,31 @@ import {
 } from '@material-tailwind/react';
 
 const PhoneCard = (props) => {
-  console.log(props.phone);
+  const { phone } = props;
+  const { id, image, phone_name, brand_name, price, rating } = phone;
+
+  // local storage item
+  const handleAddToCart = () => {
+    const favoritesArray = [];
+    const favoritesItem = JSON.parse(localStorage.getItem('phone'));
+
+    if (!favoritesItem) {
+      favoritesArray.push(phone);
+      localStorage.setItem('phone', JSON.stringify(favoritesArray));
+      alert('phone added');
+    } else {
+      const exit = favoritesItem.find((phone) => phone.id === id);
+
+      if (!exit) {
+        favoritesArray.push(...favoritesItem, phone);
+        localStorage.setItem('phone', JSON.stringify(favoritesArray));
+        alert('products added');
+      } else {
+        alert('already added');
+      }
+    }
+  };
+
   return (
     <div>
       <Card className="w-full max-w-[48rem] flex-row">
@@ -17,27 +41,28 @@ const PhoneCard = (props) => {
           className="m-0 w-2/5 shrink-0 rounded-r-none"
         >
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+            src={image}
             alt="card-image"
             className="h-full w-full object-cover"
           />
         </CardHeader>
         <CardBody>
           <Typography variant="h6" color="gray" className="mb-4 uppercase">
-            startups
+            {phone_name}
           </Typography>
           <Typography variant="h4" color="blue-gray" className="mb-2">
-            Lyft launching cross-platform service this week
+            {brand_name}
           </Typography>
           <Typography color="gray" className="mb-8 font-normal">
-            Like so many organizations these days, Autodesk is a company in
-            transition. It was until recently a traditional boxed software
-            company selling licenses. Yet its own business model disruption is
-            only part of the story
+            {price} - {rating}
           </Typography>
           <a href="#" className="inline-block">
-            <Button variant="text" className="flex items-center gap-2">
-              Learn More
+            <Button
+              onClick={handleAddToCart}
+              variant="text"
+              className="flex items-center gap-2"
+            >
+              ADD TO CART
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

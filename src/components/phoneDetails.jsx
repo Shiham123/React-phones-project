@@ -3,7 +3,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import PhoneCard from './phoneCard';
 
 const PhoneDetails = () => {
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState({});
   const [isTrue, setIsTrue] = useState(false);
 
   const params = useParams();
